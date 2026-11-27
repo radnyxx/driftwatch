@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Sample Notes",
+  "version": "1.0.0",
+  "description": "Demo fixture: a harmless note-taking extension.",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": ["https://notes.example.com/*"],
+  "content_scripts": [
+    { "matches": ["https://notes.example.com/*"], "js": ["content.js"] }
+  ],
+  "background": { "service_worker": "background.js" }
+}

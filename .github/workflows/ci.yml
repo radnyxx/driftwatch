@@ -1,0 +1,16 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+      - run: test -z "$(gofmt -l .)"
+      - run: go vet ./...
+      - run: go test -race ./...
+      - run: go build -o driftwatch .
+      - name: demo gate (must flag the risky fixture)
+        run: ./driftwatch diff -fail-on 50 testdata/demo/v1.0.0 testdata/demo/v1.1.0 || test $? -eq 2

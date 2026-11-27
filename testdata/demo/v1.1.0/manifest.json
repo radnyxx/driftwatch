@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "Sample Notes",
+  "version": "1.1.0",
+  "description": "Demo fixture: the same extension after a 'routine' update.",
+  "permissions": ["storage", "activeTab", "cookies", "webRequest", "scripting"],
+  "host_permissions": ["<all_urls>"],
+  "content_scripts": [
+    { "matches": ["<all_urls>"], "js": ["content.js"], "world": "MAIN" }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'unsafe-eval' https://cdn.stats-collector.invalid; object-src 'self'"
+  },
+  "background": { "service_worker": "background.js" }
+}
