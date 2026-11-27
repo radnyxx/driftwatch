@@ -1,13 +1,13 @@
 # driftwatch
 
-**Catch browser extensions that turn risky *between releases*.**
+**Catch browser extensions that turn risky between releases.**
 
-Most extension scanners judge one version in isolation. But the classic attack is a
+Most extension scanners judge one single version in isolation. But the classic attack is a
 clean extension that gets sold or hijacked and then ships a "routine" update with a
 new permission, broader site access or a loader for remote code. `driftwatch` diffs
-two releases and scores *what changed*, so the dangerous update stands out.
+two releases and scores what changed, so the dangerous update stands out...
 
-Zero dependencies. One static Go binary. Works offline on files you already have.
+zero dependencies (yay) and works offline on files you already have.
 
 ```
 $ driftwatch diff testdata/demo/v1.0.0 testdata/demo/v1.1.0
@@ -48,7 +48,6 @@ driftwatch inspect <path>                   dump extracted facts as JSON
 ```
 
 `<old>` / `<new>` can be a `.crx` (CRX2 and CRX3), `.xpi`, `.zip`, or an unpacked directory.
-Flags go **before** the paths.
 
 | flag | meaning |
 |---|---|
@@ -84,10 +83,10 @@ VERSION  PERMS  HOSTS  REMOTE  OBFUSC  RISK  VERDICT
 Scores add up and cap at 100. Verdicts: `low` < 15, `medium` < 40, `high` < 70, `critical` >= 70.
 Re-adding something that already existed (for example a second `<all_urls>` variant) costs nothing.
 
-## Honest limitations
+## Limitations
 
-- **Heuristics, not a verdict.** A high score means "a human should read this diff", not
-  "this is malware". Plenty of legitimate updates add permissions.
+- **scoring** A high score means 'a human should read this diff', not
+  'this is malware'. Plenty of legitimate updates add permissions.
 - **Obfuscation detection** needs at least two independent signals (many `_0x...` names,
   heavy `\xNN` escapes, `eval` next to `atob`/big encoded blobs). Plain minified code is
   deliberately not flagged. Bundlers that rename files can still shift the file lists.
